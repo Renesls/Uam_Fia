@@ -10,9 +10,9 @@ import lombok.*;
 import org.example.Uam_Fia.calculadores.CalculadorSiguienteNumeroParaAnyo;
 
 @Entity @Getter @Setter
-@View(members= // Esta vista no tiene nombre, por tanto será la vista usada por defecto
- "anyo, numero, fecha;" + // Separados por coma significa en la misma línea
- "cliente;" + // Punto y coma significa nueva línea
+@View(members=
+ "anyo, numero, fecha;" +
+ "cliente;" +
  "detalles;" +
  "observaciones"
 )
@@ -26,22 +26,21 @@ public class Factura {
     String oid;
 
     @Column(length=4)
-    @DefaultValueCalculator(CurrentYearCalculator.class) // Año actual
+    @DefaultValueCalculator(CurrentYearCalculator.class)
     int anyo;
 
     @Column(length=6)
     @DefaultValueCalculator(value=CalculadorSiguienteNumeroParaAnyo.class,
-        properties=@PropertyValue(name="anyo") // Para inyectar el valor de anyo de Factura
-                                               // en el calculador antes de llamar a calculate()
+        properties=@PropertyValue(name="anyo")
     )
     int numero;
 
     @Required
-    @DefaultValueCalculator(CurrentLocalDateCalculator.class) // Fecha actual
+    @DefaultValueCalculator(CurrentLocalDateCalculator.class)
     LocalDate fecha;
 
     @ManyToOne(fetch=FetchType.LAZY, optional=false) // El cliente es obligatorio
-    @ReferenceView("Simple") // La vista llamada 'Simple' se usará para visualizar esta referencia
+    @ReferenceView("Simple")
     Cliente cliente;
 
     @ElementCollection
