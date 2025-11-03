@@ -1,5 +1,6 @@
 package org.example.Uam_Fia.modelo;
 
+import java.util.Collection;
 import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
